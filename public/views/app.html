@@ -2,23 +2,55 @@
 <html ng-app="sportsStore">
     <head>
         <title>Sports Store</title>
-        <script src="js/lib/angular.js"></script>
         <link href="/css/lib/bootstrap.min.css" rel="stylesheet" />
         <link href="/css/lib/bootstrap-theme.min.css" rel="stylesheet" />
+        <script src="js/lib/angular.js"></script>
         <script>
-            angular.module("sportsStore", []);
+//The second argument is an array, which is currently empty, that lists the modules on which the sportsStore
+//module depends and tells AngularJS to locate and provide the functionality that these modules contain
+
+//it is important to know that when you supply the array—empty or otherwise—you
+//are telling AngularJS to create a new module. AngularJS will report an error if you try to create a module that already
+//exists, so you need to make sure your module names are unique.
+
+//angular.module method return a Module object that can be used to define application functionality
+            angular.module("sportsStore", ["customFilters"]);
         </script>
+        <script src="js/controllers/sportsStore.js"></script> <!--this should be always after angular.module("sportsStore", []);-->
+        <script src="js/filters/customFilters.js"></script>
+        <script src="js/controllers/productListControllers.js"></script>
     </head>
-    <body>
+    <body ng-controller="sportsStoreCtrl">
         <div class="navbar navbar-inverse">
             <a class="navbar-brand" href="#">SPORTS STORE</a>
         </div>
-        <div class="panel panel-default row">
+        <div class="panel panel-default row" ng-controller="productListCtrl">
             <div class="col-xs-3">
-                Categories go here
+                <a ng-click="selectCategory()"
+                   class="btn btn-block btn-default btn-lg">Home</a>
+                <a ng-repeat="item in data.products| orderBy:'category' | unique:'category'"
+                   ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg" ng-class="getCategoryClass(item)">
+                    {{item}}
+                </a>
             </div>
             <div class="col-xs-8">
-                Products go here
+                <div class="well" ng-repeat="item in data.products| filter:categoryFilterFn | range:selectedPage:pageSize">
+                    <h3>
+                        <strong>{{item.name}}</strong>
+                        <span class="pull-right label label-primary">
+                            {{item.price| currency}}
+                        </span>
+                    </h3>
+                    <span class="lead">{{item.description}}</span>
+                </div>
+                <div class="pull-right btn-group">
+                    <a ng-repeat=
+                       "page in data.products| filter:categoryFilterFn | pageCount:pageSize"
+                       ng-click="selectPage($index + 1)" class="btn btn-default"
+                       ng-class="getPageClass($index + 1)">
+                        {{$index + 1}}
+                    </a>
+                </div>
             </div>
         </div>
     </body>
