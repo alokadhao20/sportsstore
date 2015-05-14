@@ -7,5 +7,5 @@ module.exports = function(app) {
 };
 
 function examlpeSample(req, res) {
-    res.sendfile(__dirname+"/public/partials/01_exampleSample.html");
+    res.sendfile(__dirname+"/public/views/app.html");
 }
