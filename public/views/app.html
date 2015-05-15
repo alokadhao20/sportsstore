@@ -9,7 +9,7 @@
 //The second argument is an array, which is currently empty, that lists the modules on which the sportsStore
 //module depends and tells AngularJS to locate and provide the functionality that these modules contain
 
-//it is important to know that when you supply the array—empty or otherwise—you
+//it is important to know that when you supply the arrayï¿½empty or otherwiseï¿½you
 //are telling AngularJS to create a new module. AngularJS will report an error if you try to create a module that already
 //exists, so you need to make sure your module names are unique.
 
@@ -28,6 +28,8 @@
             <div class="col-xs-3">
                 <a ng-click="selectCategory()"
                    class="btn btn-block btn-default btn-lg">Home</a>
+                    <!-- AngularJS applies filters in the order in which they are applied, which means that the objects are sorted by the category property
+                   and only then passed to the unique filter-->
                 <a ng-repeat="item in data.products| orderBy:'category' | unique:'category'"
                    ng-click="selectCategory(item)" class=" btn btn-block btn-default btn-lg" ng-class="getCategoryClass(item)">
                     {{item}}
