@@ -11,7 +11,7 @@ function mongoDB() {
 
 mongoDB.prototype.createConnection = function(getAllProductsCallback) {
     var self = this;
-    MongoClient.connect('mongodb://127.0.0.1:27017/sportsstore', function(err, db) {
+    MongoClient.connect('mongodb://127.0.0.1:27017/sortsstore', function(err, db) {
         if(err){
             console.log("I am retruning err");
             getAllProductsCallback(err,null);
